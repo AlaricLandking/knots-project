@@ -1,0 +1,309 @@
+\documentclass{article}
+\usepackage{caption,subcaption,amsmath,amssymb,xcolor,tikz}
+\usetikzlibrary{arrows, decorations.markings}
+
+\title{Planning}
+\author{Alwyn Bakker}
+
+\begin{document}
+%tikz setup
+	%sets up style for arrows partway along lines
+	\tikzset{->-/.style={decoration={markings, mark=at position #1 with {\arrow[scale=1.5]{>}}}, postaction={decorate}}} 
+	\tikzset{-<-/.style={decoration={markings, mark=at position #1 with {\arrow[scale=1.5]{<}}}, postaction={decorate}}}
+	%sets up style for arrows partway along doubled lines
+	\tikzstyle{double >}=[postaction=decorate, decoration={markings, mark=at position #1 with {\arrow[thick, scale=1.5, yshift= 2.5pt]{<} \arrow[thick, scale=1.5, yshift=-2.5pt]{<}},},]
+
+
+\maketitle
+\textbf{Part 2 - Arf Invariant and Seifert Matrices}\\
+Things still to define:
+\begin{enumerate}
+\item Push off
+\item Seifert Matrix
+\end{enumerate}
+\textbf{Link:} A link is a set of one or more circles embedded disjointly in $\mathbb{R}^3$. Like knots, they can be oriented or unoriented.\\
+\\
+\textbf{Genus (of Seifert surface):} The number of handles on a closed, orientable surface. The genus of a Seifert surface can be calculated from the knot projection it was constructed from. Counting the number of crossing points in the diagram ($d$), the number of Seifert circles produced as we transform the knot into the surface ($f$), and the number of components in the link ($m$), the genus of the surface ($g$) is
+$$g=\frac{1}{2}(2+d-f-m)$$
+
+\textbf{Genus (of knot):} The genus of a knot is the minimal genus of a Seifert surface for the knot. Seifert surfaces are not unique; different diagrams of the same knot can have Seifert surfaces of different genera. Note that adding a handle to a surface changes the genus of the surface without changing its boundary, and hence the knot remains the same.\\
+
+We can calculate the genus of the Seifert surfaces for the knots we examined in the previous section, but it is possible that they are not of minimal genus; the trefoil knot in Fig (\ref{fig:trefoil oriented crossing elimination}) has three crossing points, two Seifert circles and one link component, giving us a genus of $\frac{1}{2}(2+3-2-1)=1$. This is, in fact, the minimal genus of Seifert surfaces for this knot; lowering the genus further would result in the unknot, which is genus zero. The $5_2$ knot in Fig (\ref{fig:my knot figures}) has five crossing points, four Seifert circles and one link component, giving us a genus of $\frac{1}{2}(2+5-4-1)=1$. This is also the minimal genus of Seifert surfaces for this knot, for the same reason.\\
+\\
+\textbf{Crossing sign:} A value assigned to a crossing depending on its orientation; represented in Fig (\ref{fig:crossing sign}).\\
+\\
+\textbf{Linking Number:} The linking number is the number of times two components $\alpha, \beta$  wrap around each other, and is denoted as $\ell k(\alpha,\beta)$. More accurately, the linking number is an invariant defined for a two-component oriented link as the sum of all crossing signs of the links divided by 2. We can instead count only the crossings where the first component passes over the second component, as this removes the need to divide by two. Examples of some elementary links with their linking numbers are given in Fig (\ref{fig:links}).\\
+
+If two components are separable (i.e. a plane can be introduced between the two components such that it intersects neither component, yet isolates them), they will have a linking number of zero. The converse is not true, as there exist inseperable two-component links that have a linking number of zero, such as the Whitehead link, in Fig (\ref{fig:whitehead}). However, if one component of the link is allowed to pass through itself, we can make the two components separable, as this action does not change the linking number. As an example, in Fig (\ref{fig:whitehead}), swapping the central crossing separates the link.\\
+\\
+We will use the idea of linking numbers to construct a \textbf{Seifert matrix} for individual knots; Seifert matrices are not invariants in themselves, but we can use them to construct an equivalence class \textcolor{red}{with properties we shall discuss later}, which \emph{is} an invariant, and can be used to define the Arf invariant.\\
+\\
+Using the cores of the bands and some arcs on the tablet, we can construct intersecting, oriented circles on the surface. Fig (\ref{fig:trefoil tablet core}) shows the result of this process for the trefoil tablet. \textcolor{red}{The orientation of the circles is arbitrary.}\\
+
+Next, we decide which side of the tablet is the `top'; since the tablet is just a deformed Seifert surface, which is orientable, this is defined. For all tablets, we will define the `top' as the side that has the boundary oriented in the conventional direction (anticlockwise) \textcolor{red}{(however, this choice is also arbitrary)}. We pick a normal vector to this surface and \textbf{push off} our oriented curves $x_i$ very slightly in the direction of this normal vector. This push off of $x_i$ is denoted $x^*_i$, and represents a curve lying parallel to $x_i$ but just above the Seifert surface. Fig (\ref{fig:trefoil core push off}) gives an example of a push off for one of the intersecting curves constructed earlier.\\
+\\
+We can now define a Seifert matrix as the $2g \times 2g$ matrix $V$ with entries $v_{i,j}$ given by $v_{i,j}=\ell k(x_i,x^*_j)$, where $g$ is the genus of the Seifert surface our curves lie on. For the trefoil in Fig (\ref{fig:trefoil tablet core}), the Seifert matrix is
+$$V=\begin{bmatrix}\ell k(x_1,x^*_1)&\ell k(x_1,x^*_2)\\\ell k(x_2,x^*_1)&\ell k(x_2,x^*_2)\end{bmatrix}=\begin{bmatrix}-1&1\\0&-1\end{bmatrix}$$
+If we use the Seifert surface from Fig (\ref{fig:seifert deform 2}) and perform the same process, we end up with the same result if we pick the correct orientation;
+%%-------------------------------------------------------Crossing Sign Figures-------------------------------------------------------------------%%
+\begin{figure}
+\centering
+\begin{tikzpicture}[scale=2]
+\coordinate (ltl) at (-2,1); \coordinate (ltr) at (-1,1); \coordinate (lbl) at (-2,0); \coordinate (lbr) at (-1,0); \coordinate (lm) at (-1.5,0.5); \node[] (+1) at (-1.5,-0.5) {$+1$};
+\draw [thick, ->, >=stealth] (lbl) -- (ltr); \draw [thick, shorten >=8] (lbr) -- (lm); \draw [thick, shorten <=8, ->, >=stealth] (lm) -- (ltl);
+\coordinate (rtl) at (1,1); \coordinate (rtr) at (2,1); \coordinate (rbl) at (1,0); \coordinate (rbr) at (2,0); \coordinate (rm) at (1.5,0.5); \node[] (-1) at (1.5, -0.5) {$-1$};
+\draw [thick, ->, >=stealth] (rbr) -- (rtl); \draw[thick, shorten >=8] (rbl) -- (rm); \draw[thick, shorten <=8, ->, >=stealth] (rm) -- (rtr);
+\end{tikzpicture}
+\caption{Crossing sign convention.}
+\label{fig:crossing sign}
+\end{figure}
+%%----------------------------------------------------------Link Figures---------------------------------------------------------------------------%%
+\begin{figure}
+\centering
+\begin{subfigure}[b]{0.5\linewidth}
+	\centering
+		\begin{tikzpicture}[scale=0.5]
+		\draw[thick, ->-=0.26, ->-=0.77] (-2,0) circle (2cm); \draw[thick, ->-=0.26, ->-=0.77] (2.4,0) circle (2cm);
+		\end{tikzpicture}
+	\caption{}
+	\label{fig:unlink}
+	\end{subfigure}%
+	\begin{subfigure}[b]{0.5\linewidth}
+	\centering
+		\begin{tikzpicture}[scale=0.5]
+		\draw[thick, ->-=0.41] (0,1) arc (45:385:2cm); \draw[thick, ->-=0.6] (0,-1.3) arc (-155:-495:2cm);
+		\end{tikzpicture}
+	\caption{}
+	\label{fig:hopf}
+	\end{subfigure}
+	
+	\begin{subfigure}[b]{0.5\linewidth}
+	\captionsetup{skip=-8pt}
+	\centering
+		\begin{tikzpicture}[scale=0.5]
+		\coordinate (cross tl) at (-1.41, 1.41); \coordinate (cross tr) at (1.41,1.41); \coordinate (cross bl) at (-1.41,-1.41); \coordinate (cross br) at (1.41,-1.41); \coordinate (mid) at (0,0);
+		\draw[thick, ->-=0.26, ->-=0.77] (mid) circle (2cm); \draw[white, line width=3mm] (1.5,1.5) -- (-1.5,-1.5);
+		\draw[thick, distance=75, shorten >=4, shorten <=4, ->-=0.65] (mid) to [out=45, in=-135] (cross tr) to [out=45, in=-45] (cross br); \draw[thick, shorten >=4, shorten <=4] (cross br) to [out=135, in=-45] (mid) to [out=135, in=-45] (cross tl); \draw [thick, distance=75, shorten >=4, shorten <=4, ->-=0.35] (cross tl) to [out=135, in=-135] (cross bl) to [out=45, in=-135] (mid);
+		\end{tikzpicture}
+	\caption{}
+	\label{fig:whitehead}
+	\end{subfigure}%
+	\begin{subfigure}[b]{0.5\linewidth}
+	\captionsetup{skip=-5pt}
+	\centering
+		\begin{tikzpicture}[scale=0.5]
+		\coordinate (mid) at (0,0); \coordinate (cross tr1) at (1.25,1.57); \coordinate (cross br1) at (1.25,-1.57); \coordinate (cross tr2) at (1.57,1.25); \coordinate (cross br2) at (1.57,-1.25); \coordinate (far right 1) at (3,0); \coordinate (far right 2) at (3.5,0); \coordinate (top cross) at (2.5,1.7);
+		\draw[thick, ->-=0.26, ->-=0.77] (mid) circle (2cm); \draw[white, line width=5mm] (1.5,1.5) -- (mid);
+		\draw[thick, shorten >=3, shorten <=3] (top cross) to [out=135, in=45] (cross tr1) to [out=-135, in=135] (cross br1);
+		\draw[thick, shorten <=3, distance=70, -<-=0.66] (cross br1) to [out=-30, in=20] (top cross);
+		\draw[thick, shorten >=3] (top cross) to [out=-160, in=45] (cross tr2) to [out=-135, in=135] (cross br2);
+		\draw[thick, shorten <=3, shorten >=3, -<-=0.7] (cross br2) to [out=-30, in=-45] (top cross);
+		\end{tikzpicture}
+	\caption{}
+	\label{fig:linking number 2}
+	\end{subfigure}
+\caption{(a) is the unlink, $L=0$ (components don't cross over each other). (b) is the Hopf link, $L=1$ (as oriented, both crossings are positive). (c) is the Whitehead link, $L=0$ (as oriented, the two left crossings are negative, the two right crossings are positive, and the central crossing is of one component with itself so it is not included). (d) is a two-component link, $L=2$ (as oriented, all crossings are positive).}
+\label{fig:links}
+\end{figure}
+%%-------------------------------------------------------Band Core Figures------------------------------------------------------------------------%%
+\begin{figure}
+\centering
+\begin{subfigure}[b]{0.5\linewidth}
+\centering
+	\begin{tikzpicture}[scale=2, xscale=-1]
+	%'disc' coordinates
+	\coordinate (topl) at (-1,0); \coordinate (topr) at (1,0); \coordinate (botl) at (-1,-0.5); \coordinate (botr) at (1, -0.5);
+	\coordinate (breakl1) at (-0.65,0); \coordinate (breakl2) at (-0.5,0); \coordinate (breakml1) at (-0.25,0); \coordinate (breakml2) at (-0.1,0); \coordinate (breakmr1) at (0.1,0); 	\coordinate (breakmr2) at (0.25,0); \coordinate (breakr1) at (0.5,0); \coordinate (breakr2) at (0.65,0);
+	%draw `disc'
+	\draw[thick, rounded corners] (breakl2) -- (breakml1);
+	\draw[thick, rounded corners] (breakml2) -- (breakmr1);
+	\draw[thick, rounded corners] (breakmr2) -- (breakr1); 
+	\draw[thick, rounded corners, ->-=0.51] (breakr2) -- (topr) -- (botr) -- (botl) -- (topl) -- (breakl1);
+	%band coords
+	\coordinate (breakmidl) at (-0.575,0); \coordinate (breakmidmr) at (0.175,0); \coordinate (breakmidml) at (-0.175,0); \coordinate (breakmidr) at (0.575,0);
+	\coordinate (leftmidb) at (-0.3,0.775);
+	\coordinate (leftmidt) at (-0.3,1.575);
+	\coordinate (rightmidb) at (0.3,0.775);
+	\coordinate (rightmidt) at (0.3,1.575);
+	%left band draw
+	\draw[thick, double distance=7pt] (breakmidl) to [out=90, in=-135] (leftmidb) to [out=45, in=0] (leftmidt);
+	\draw[thick, double distance=7pt, shorten <=-1] (leftmidt) to [out=180,in=135] (leftmidb) to [out=-45, in=90] (breakmidmr);
+	%core
+	\draw[thin, ->-=0.55] (breakmidml) to [out=-90, in=-90] (breakmidr);
+	%\draw[double distance=4pt, white] (breakmidmr) to [out=-90, in=-90] (breakmidl);
+	\draw[thin, shorten <=4, shorten >=4, ->-=0.28] (leftmidb) to [out=-135, in=90] (breakmidl) to [out=-90, in=-90] (breakmidmr) to [out=90, in=-45] (leftmidb) to [out=135, in=180] (leftmidt) to [out=0, in=45] (leftmidb);
+	%right band draw
+	\draw[thick, double distance=7pt] (breakmidml) to [out=90, in=-135] (rightmidb) to [out=45, in=0] (rightmidt);
+	\draw[thick,double distance=7pt, shorten <=-1] (rightmidt) to [out=180,in=135] (rightmidb) to [out=-45, in=90] (breakmidr);
+	%core
+	\draw[thin, shorten <=4] (rightmidb) to [out=-135, in=90] (breakmidml); \draw[thin, shorten >=4] (breakmidr) to [out=90, in=-45] (rightmidb) to [out=135, in=180] (rightmidt) to [out=0, in=45] (rightmidb);
+	%nodes
+	\node[] (x1) at (0.5,-0.3) {$x_1$}; \node[] (x2) at (-0.5,-0.3) {$x_2$};
+	\end{tikzpicture}
+\caption{}
+\label{fig:trefoil tablet core}
+\end{subfigure}%
+\begin{subfigure}[b]{0.5\linewidth}
+\centering
+\begin{tikzpicture}[scale=2, xscale=-1]
+	%'disc' coordinates
+	\coordinate (topl) at (-1,0); \coordinate (topr) at (1,0); \coordinate (botl) at (-1,-0.5); \coordinate (botr) at (1, -0.5);
+	\coordinate (breakl1) at (-0.65,0); \coordinate (breakl2) at (-0.5,0); \coordinate (breakml1) at (-0.25,0); \coordinate (breakml2) at (-0.1,0); \coordinate (breakmr1) at (0.1,0); 	\coordinate (breakmr2) at (0.25,0); \coordinate (breakr1) at (0.5,0); \coordinate (breakr2) at (0.65,0);
+	%draw `disc'
+	\draw[thick, rounded corners] (breakl2) -- (breakml1);
+	\draw[thick, rounded corners] (breakml2) -- (breakmr1);
+	\draw[thick, rounded corners] (breakmr2) -- (breakr1); 
+	\draw[thick, rounded corners, ->-=0.51] (breakr2) -- (topr) -- (botr) -- (botl) -- (topl) -- (breakl1);
+	%band coords
+	\coordinate (breakmidl) at (-0.575,0); \coordinate (breakmidmr) at (0.175,0); \coordinate (breakmidml) at (-0.175,0); \coordinate (breakmidr) at (0.575,0);
+	\coordinate (leftmidb) at (-0.3,0.775);
+	\coordinate (leftmidt) at (-0.3,1.575);
+	\coordinate (rightmidb) at (0.3,0.775);
+	\coordinate (rightmidt) at (0.3,1.575);
+	%left band draw
+	\draw[thick, double distance=7pt] (breakmidl) to [out=90, in=-135] (leftmidb) to [out=45, in=0] (leftmidt);
+	\draw[thick, double distance=7pt, shorten <=-1] (leftmidt) to [out=180,in=135] (leftmidb) to [out=-45, in=90] (breakmidmr);
+	%core
+	\draw[thin, ->-=0.55] ([xshift=0.8] breakmidml) to [out=-90, in=-90] ([xshift=-0.8] breakmidr);
+	%\draw[double distance=6pt, white, distance=9] (breakmidmr) to [out=-90, in=-90] (breakmidl);
+	\draw[thin, shorten <=4] (leftmidb) to [out=-135, in=90] (breakmidl); \draw[thin, shorten >=4] (breakmidmr) to [out=90, in=-45] (leftmidb) to [out=135, in=180] (leftmidt) to [out=0, in=45] (leftmidb);
+	\draw[thin, ->-=0.45] (breakmidl) to [out=-90, in=-90] (breakmidmr);
+	%right band draw
+	\draw[thick, double distance=7pt] (breakmidml) to [out=90, in=-135] (rightmidb) to [out=45, in=0] (rightmidt);
+	\draw[thick,double distance=7pt, shorten <=-1] (rightmidt) to [out=180,in=135] (rightmidb) to [out=-45, in=90] (breakmidr);
+	%test offset
+	\draw[double distance=3pt, white, shorten >=1, shorten <=1, distance=10] ([xshift=-1] breakmidml) to [out=-90, in=-90] ([xshift=1] breakmidr);
+	\draw[thin, ->-=0.65, distance=10pt] ([xshift=-0.8] breakmidml) to [out=-90, in=-90] ([xshift=0.8] breakmidr);
+	\draw[thin, double distance=3pt, shorten <=5] (rightmidb) to [out=-135, in=90] (breakmidml); \draw[thin, double distance=3pt, shorten >=5] (breakmidr) to [out=90, in=-45] (rightmidb) to [out=135, in=180] (rightmidt) to [out=0, in=45] (rightmidb);
+	%nodes
+	\node[] (x1*) at (0.55,-0.3) {$x_1^*$}; \node[] (x2) at (-0.5,-0.3) {$x_2$}; \node[] (x1) at (0.3,-0.1) {$x_1$};
+	\end{tikzpicture}
+\caption{}
+\label{fig:trefoil core push off}
+\end{subfigure}
+\caption{(a) shows the two intersecting, oriented circles for the trefoil knot. (b) shows the push off of $x_1$, denoted $x_1^*$.}
+\label{fig:push off setup}
+\end{figure}
+%%-------------------------------------------------------Alternate Trefoil Cores-------------------------------------------------------------------%%
+\begin{figure}
+\centering
+	\begin{subfigure}[b]{0.5\linewidth}
+	\captionsetup{skip=-50pt}
+	\centering
+	\begin{tikzpicture}[scale=0.75] %the trefoil as discs with twisted bands
+	%central coordinates
+	\coordinate (mid) at (0,0); \coordinate (top) at (0,1.5); \coordinate (bot) at (0,-1.5);
+	%left coordinates
+	\coordinate (topl1) at (-1,1.75); \coordinate (botl1) at (-1,1.25); \coordinate (topl2) at (-1,0.25); \coordinate (botl2) at (-1,-0.25); \coordinate (topl3) at (-1,-1.25); \coordinate (botl3) at (-1,-1.75);
+	%right coordinates
+	\coordinate (topr1) at (1,1.75); \coordinate (botr1) at (1,1.25); \coordinate (topr2) at (1,0.25); \coordinate (botr2) at (1,-0.25); \coordinate (topr3) at (1,-1.25); \coordinate (botr3) at (1,-1.75);
+	%top band
+	\draw [thick, ->-=0.3, ->-=0.8] (topr1) to [out=180, in=45] (top) to [out=-135, in=0] (botl1);
+	\draw [thick, shorten >=5,  -<-=0.5] (botr1) to [out=180, in =-45] (top);
+	\draw [thick, shorten <=5,  -<-=0.5] (top) to [out=135, in=0] (topl1);
+	%mid band
+	\draw [thick, ->-=0.3, ->-=0.8] (topr2) to [out=180, in=45] (mid) to [out=-135, in=0] (botl2);
+	\draw [thick, shorten >=5, -<-=0.5] (botr2) to [out=180, in =-45] (mid);
+	\draw [thick, shorten <=5,  -<-=0.5] (mid) to [out=135, in=0] (topl2);
+	%bot band
+	\draw [thick, ->-=0.3, ->-=0.8] (topr3) to [out=180, in=45] (bot) to [out=-135, in=0] (botl3);
+	\draw [thick, shorten >=5,  -<-=0.5] (botr3) to [out=180, in =-45] (bot);
+	\draw [thick, shorten <=5,  -<-=0.5] (bot) to [out=135, in=0] (topl3);
+	%left disc
+	\draw [thick] (topl3) to [out=85, in=-85] (botl2);
+	\draw [thick] (topl2) to [out=85, in=-85] (botl1);
+	\draw [thick, -<-=0.4] (topl1) to [out=125, in=-125, distance=100] (botl3);
+	%right disc
+	\draw [thick] (topr3) to [out=95, in=-95] (botr2);
+	\draw [thick] (topr2) to [out=95, in=-95] (botr1);
+	\draw [thick, -<-=0.4] (topr1) to [out=55, in=-55, distance=100] (botr3);
+	%core coordinates
+	\coordinate (core1tr) at (1, 1.5); \coordinate (core1br) at (1,0.1); \coordinate (core1tl) at (-1,1.5); \coordinate (core1bl) at (-1,-0.1); \coordinate (core2tr) at (1, -0.1); \coordinate (core2br) at (1, -1.5); \coordinate (core2tl) at (-1,0.1); \coordinate (core2bl) at (-1, -1.5);
+	%core draw
+	\draw [thin, shorten <=3, shorten >=3, -<-=0.5] (top) to [out=10, in=160] (core1tr) to [out=-20, in=0] (core1br) to [out=180, in=10] (mid);
+	\draw [thin, shorten <=3, shorten >=3, -<-=0.5] (mid) to [out=-170, in=0] (core1bl) to [out=180, in=-160] (core1tl) to [out=20, in=170] (top);
+	\draw[thick, densely dotted, shorten <=3, shorten >=3, decoration={markings,mark=at position 0.55 with {\arrow[thin, scale=1.5]{<}}}, postaction={decorate}] (mid) to [out=-10, in=0] (core2tr) to [out=0, in=20] (core2br) to [out=-160, in=-10] (bot);
+	\draw[thick, densely dotted, shorten <=3, shorten >=3, decoration={markings,mark=at position 0.5 with {\arrow[thin, scale=1.5]{<}}}, postaction={decorate}] (bot) to [out=170, in=0] (core2bl) to [out=180, in=-160] (core2tl) to [out=20, in=170] (mid);
+	%nodes
+	\node[] (x1) at (1.75,1.5) {$x_1$}; \node[] (x2) at (1.75,-1.5) {$x_2$};
+	\end{tikzpicture}
+	\caption{}
+	\label{fig:seifert discs repeat}
+	\end{subfigure}%
+	\begin{subfigure}[b]{0.5\linewidth}
+	\centering
+	\begin{tikzpicture}[scale=1.2]
+	%coordinates x1,x1*
+	\coordinate (top) at (0,1); \coordinate (bot) at (0,0); \coordinate (left) at (-0.75,0.5); \coordinate (right) at (0.75, 0.5); \coordinate (inleft) at (-0.5, 0.5); \coordinate (inright) at (0.5, 0.5);
+	%draw x1,x1*
+	\draw[thick, shorten <=4, shorten >=4, -<-=0.22] (top) to [out=-20, in=90] (inright) to [out=-90,in=20] (bot) to [out=-160, in=-90] (left) to [out=90, in=160] (top);
+	\draw[thick, shorten <=4, shorten >=4, -<-=0.72] (bot) to [out=160, in=-90] (inleft) to [out=90, in=-160] (top) to [out=20, in=90] (right) to [out=-90, in=-20] (bot);
+	%nodes x1,x1*
+	\node[] (x1) at (1.2,0.5) {$x_1$}; \node (x1*) at (0.1,0.5) {$x_1^*$};
+	%coordinates x1,x2*
+	\coordinate (topm) at (3,1.5); \coordinate (botm) at (3,0); \coordinate (crossl) at (2.5,0.75); \coordinate (crossr) at (3.5,0.75);
+	%draw x1,x2*
+	\draw[thick] (topm) to [out=0, in=20] (crossr) to [out=-160, in=-20] (crossl) to [out=160, in=180] (topm);
+	\draw[thick, shorten >=4, shorten <=4] (crossl) to [out=-160, in=180] (botm) to [out=0, in=-20] (crossr);
+	\draw[thick, shorten <=4, shorten >=4] (crossr) to [out=160, in=20] (crossl);
+	\end{tikzpicture}
+	\caption{}
+	\label{}
+	\end{subfigure}
+\caption{(a) shows the two intersecting, oriented circles on the earlier Seifert surface for the trefoil knot.}
+\label{}
+\end{figure}
+\\
+\textbf{Part 3 - Arf Invariant and Skein Relations}\\
+\textcolor{red}{Things to define:}
+\begin{enumerate}
+\item Braid/braid word
+\item Knot Polynomial
+\item Alexander Polynomial
+\item Conway Polynomial?
+\item HOMFLY?
+\item Skein Relation
+\end{enumerate}
+
+
+
+\end{document}
+
+
+
+
+
+One method of constructing this set is by \emph{pushing off} the knot very slightly, so that we end up with two linked copies of the knot. This is perhaps best described pictorially; Fig (\ref{fig:trefoil pushoff}) demonstrates this process for the trefoil
+%%---------------------------------------------------------Push Off Figures------------------------------------------------------------------------%%
+\begin{figure}
+\centering
+\begin{subfigure}[b]{0.5\linewidth}
+\captionsetup{skip=-50pt}
+\centering
+	\begin{tikzpicture}[scale=0.8]
+	\coordinate (top) at (0,2); \coordinate (mid) at (0,0); \coordinate (bot) at (0,-2);
+	\draw [thick, -<-=0.13, -<-=0.6, shorten <= 5, shorten >= 5] (mid) to [out=135, in=-135] (top) to [out=45, in=-45, distance=120] (bot);
+	\draw [thick, -<-=0.3, -<-=0.8, shorten <=5, shorten >= 5] (bot) to [out=135, in=-135] (mid) to [out=45, in=-45] (top);
+	\draw [thick, -<-=0.36, -<-=0.9, shorten <=5, shorten >=5] (top) to [out=135, in =-135, distance=120] (bot) to [out=45, in=-45] (mid);
+	\end{tikzpicture}
+\caption{}
+\label{fig:trefoilp}
+\end{subfigure}%
+\begin{subfigure}[b]{0.5\linewidth}
+\captionsetup{skip=-50pt}
+\centering
+	\begin{tikzpicture}[scale=0.8]
+	\coordinate (top) at (0,2); \coordinate (mid) at (0,0); \coordinate (bot) at (0,-2);
+	\draw [thick, double distance=7pt, double >=0.13, double >=0.6, shorten <= 6, shorten >= 6] (mid) to [out=135, in=-135] (top) to [out=45, in=-45, distance=120] (bot);
+	\draw [thick, double distance=7pt, double >=0.3, double >=0.8, shorten <=6, shorten >= 6] (bot) to [out=135, in=-135] (mid) to [out=45, in=-45] (top);
+	\draw [thick, double distance=7pt, double >=0.36, double >=0.9, shorten <=6, shorten >=6] (top) to [out=135, in =-135, distance=120] (bot) to [out=45, in=-45] (mid);
+	%coordinates for middle sections
+	\coordinate (ttl) at (-0.1,2.1); \coordinate (tbr) at (0.1,1.9); 	\coordinate (mtl) at (-0.1,0.1); \coordinate (mbr) at (0.1,-0.1); \coordinate (btl) at (-0.1,-1.9); \coordinate (bbr) at (0.1,-2.1);
+	\draw[thick, shorten <=1.75, shorten >=1.75, double distance=7pt] (ttl) -- (tbr); \draw[thick, shorten <=1.75, shorten >=1.75, double distance=7pt] (mtl) -- (mbr); \draw[thick, shorten <=1.75, shorten >=1.75, double distance=7pt] (btl) -- (bbr);
+	\end{tikzpicture}
+\caption{}
+\label{fig:pushoff}
+\end{subfigure}
+\caption{The push off of the trefoil knot. The linking number $L=$}
+\label{fig:trefoil pushoff}
+\end{figure}
