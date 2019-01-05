@@ -46,6 +46,27 @@ We can now define a Seifert matrix as the $2g \times 2g$ matrix $V$ with entries
 $$V=\begin{bmatrix}\ell k(x_1,x^*_1)&\ell k(x_1,x^*_2)\\\ell k(x_2,x^*_1)&\ell k(x_2,x^*_2)\end{bmatrix}=\begin{bmatrix}-1&1\\0&-1\end{bmatrix}$$
 If we use the Seifert surface from Fig (\ref{fig:seifert deform 2}) and perform the same process, we end up with the same result if we pick the correct orientation; Fig (\ref{fig:trefoil pushoff}) shows a more detailed layout of the process, and taking the linking numbers of the four pairs of circles in Fig (\ref{fig:trefoil tiny links}) gives us the matrix $$V=\begin{bmatrix}\ell k(x_1,x^*_1)&\ell k(x_1,x^*_2)\\\ell k(x_2,x^*_1)&\ell k(x_2,x^*_2)\end{bmatrix}=\begin{bmatrix}-1&1\\0&-1\end{bmatrix},$$ exactly as before.\\
 \\
+However, this is a niche case, as it is far more likely two different Seifert surfaces for the same knot will not have identical Seifert matrices; we can compose the trefoil tablet with an unknot tablet and get another legal Seifert surface for the trefoil (as composing any knot with the unknot just returns the original knot). However, this new Seifert surface will have a radically different Seifert matrix to the original, as we now have to construct four intersecting, oriented circles on the surface, one for each of the bands. These four circles, $x_1$, $x_2$, $x_3$, $x_4$, each have a push-off, and by the same process as before we calculate the $i,j$th entry of $V$ to be $\ell k(x_i,x_j^*)$, so $V$ is now a $4\times 4$ matrix rather than a $2\times2$ matrix.\\
+\\
+In order to make sense of this, we need a definition that will allow us to put all the possible Seifert matrices for a particular knot into one equivalence class.\\
+\\%ref for the following: https://www.maths.ed.ac.uk/~v1ranick/papers/levineicm.pdf
+\textbf{Congruence:} Two matrices $A$ and $B$ are congruent if there is an invertible matrix $P$ such that $A=P^TBP$.\\
+\\
+\textbf{Right Enlargement:} A right enlargement of $V$ is a matrix in the form $$\left[\begin{array}{@{}c|c@{}}
+V & \begin{matrix} \xi & 0\end{matrix}\\
+\hline
+\begin{matrix}0\\0\end{matrix} & \begin{matrix}0&1\\0&0\end{matrix}
+\end{array}\right],$$
+where $\xi$ is a column vector.\\
+\\
+\textbf{Left Enlargement:} A left enlargement of $V$ is a matrix in the form $$\left[\begin{array}{@{}c|c@{}}
+V & \begin{matrix}0&0\end{matrix}\\
+\hline
+\begin{matrix}\xi\\0\end{matrix}&\begin{matrix}0&0\\1&0\end{matrix}
+\end{array}\right],$$
+where $\xi$ is a row vector.\\
+\\
+The two enlargements and congruence generate the S-equivalence class, and we can say that any two Seifert matrices of the same knot are S-equivalent.\\
 %%-------------------------------------------------------Crossing Sign Figures-------------------------------------------------------------------%%
 \begin{figure}
 \centering
