@@ -44,7 +44,8 @@ Next, we decide which side of the tablet is the `top'; since the tablet is just 
 \\
 We can now define a Seifert matrix as the $2g \times 2g$ matrix $V$ with entries $v_{i,j}$ given by $v_{i,j}=\ell k(x_i,x^*_j)$, where $g$ is the genus of the Seifert surface our curves lie on. For the trefoil in Fig (\ref{fig:trefoil tablet core}), the Seifert matrix is
 $$V=\begin{bmatrix}\ell k(x_1,x^*_1)&\ell k(x_1,x^*_2)\\\ell k(x_2,x^*_1)&\ell k(x_2,x^*_2)\end{bmatrix}=\begin{bmatrix}-1&1\\0&-1\end{bmatrix}$$
-If we use the Seifert surface from Fig (\ref{fig:seifert deform 2}) and perform the same process, we end up with the same result if we pick the correct orientation;
+If we use the Seifert surface from Fig (\ref{fig:seifert deform 2}) and perform the same process, we end up with the same result if we pick the correct orientation; Fig (\ref{fig:trefoil pushoff}) shows a more detailed layout of the process, and taking the linking numbers of the four pairs of circles in Fig (\ref{fig:trefoil tiny links}) gives us the matrix $$V=\begin{bmatrix}\ell k(x_1,x^*_1)&\ell k(x_1,x^*_2)\\\ell k(x_2,x^*_1)&\ell k(x_2,x^*_2)\end{bmatrix}=\begin{bmatrix}-1&1\\0&-1\end{bmatrix},$$ exactly as before.\\
+\\
 %%-------------------------------------------------------Crossing Sign Figures-------------------------------------------------------------------%%
 \begin{figure}
 \centering
@@ -239,19 +240,35 @@ If we use the Seifert surface from Fig (\ref{fig:seifert deform 2}) and perform 
 	\draw[thick, shorten <=4, shorten >=4, -<-=0.22] (top) to [out=-20, in=90] (inright) to [out=-90,in=20] (bot) to [out=-160, in=-90] (left) to [out=90, in=160] (top);
 	\draw[thick, shorten <=4, shorten >=4, -<-=0.72] (bot) to [out=160, in=-90] (inleft) to [out=90, in=-160] (top) to [out=20, in=90] (right) to [out=-90, in=-20] (bot);
 	%nodes x1,x1*
-	\node[] (x1) at (1.2,0.5) {$x_1$}; \node (x1*) at (0.1,0.5) {$x_1^*$};
+	\node[] (x1a) at (1.2,0.5) {$x_1$}; \node (x1*a) at (0.1,0.5) {$x_1^*$};
 	%coordinates x1,x2*
-	\coordinate (topm) at (3,1.5); \coordinate (botm) at (3,0); \coordinate (crossl) at (2.5,0.75); \coordinate (crossr) at (3.5,0.75);
+	\coordinate (topm) at (2.75,1.25); \coordinate (botm) at (2.75,-0.25); \coordinate (crossl) at (2.25,0.5); \coordinate (crossr) at (3.25,0.5);
 	%draw x1,x2*
-	\draw[thick] (topm) to [out=0, in=20] (crossr) to [out=-160, in=-20] (crossl) to [out=160, in=180] (topm);
-	\draw[thick, shorten >=4, shorten <=4] (crossl) to [out=-160, in=180] (botm) to [out=0, in=-20] (crossr);
-	\draw[thick, shorten <=4, shorten >=4] (crossr) to [out=160, in=20] (crossl);
+	\draw[thick, shorten <=4, shorten >=4, -<-=0.35] (crossl) to [out=160, in=180] (topm) to [out=0, in=20] (crossr) to [out=-160, in=-20] (crossl);
+	\draw[thick, shorten <=4, shorten >=4, ->-=0.67] (crossr) to [out=160, in=20] (crossl) to [out=-160, in=180] (botm) to [out=0, in=-20] (crossr);
+	%nodes x1, x2*
+	\node[] (x1b) at (2.75,0.9) {$x_1$}; \node[] (x2*b) at (2.75,0.1) {$x_2^*$};
+	%coordinates x1*,x2
+	\coordinate (topmc) at (0,-0.5); \coordinate (botmc) at (0,-2); \coordinate (crosslc) at (-0.5,-1.25); \coordinate (crossrc) at (0.5,-1.25);
+	%draw x1*,x2
+	\draw[thick, -<-=0.01] (topmc) to [out=0, in=20] (crossrc) to [out=-160, in=-20] (crosslc) to [out=160, in=180] (topmc);
+	\draw[thick, ->-=0.52, shorten >=4, shorten <=4] (crosslc) to [out=-160, in=180] (botmc) to [out=0, in=-20] (crossrc);
+	\draw[thick, shorten <=4, shorten >=4] (crossrc) to [out=160, in=20] (crosslc);
+	%nodes x1*,x2
+	\node[] (x1*c) at (0, -0.85) {$x_1^*$}; \node[] (x2c) at (0,-1.65) {$x_2$};
+	%coordinates x2,x2*
+	\coordinate (topd) at (2.5,-0.75); \coordinate (botd) at (2.5,-1.75); \coordinate (leftd) at (1.75,-1.25); \coordinate (rightd) at (3.25,-1.25); \coordinate (inleftd) at (2,-1.25); \coordinate (inrightd) at (3,-1.25);
+	%draw x2,x2*
+	\draw[thick, shorten <=4, shorten >=4, -<-=0.22] (topd) to [out=-20, in=90] (inrightd) to [out=-90,in=20] (botd) to [out=-160, in=-90] (leftd) to [out=90, in=160] (topd);
+	\draw[thick, shorten <=4, shorten >=4, -<-=0.72] (botd) to [out=160, in=-90] (inleftd) to [out=90, in=-160] (topd) to [out=20, in=90] (rightd) to [out=-90, in=-20] (botd);
+	%nodes x2,x2*
+	\node[] (x2d) at (3.7,-1.25) {$x_2$}; \node (x2*d) at (2.6,-1.25) {$x_2^*$};
 	\end{tikzpicture}
 	\caption{}
-	\label{}
+	\label{fig:trefoil tiny links}
 	\end{subfigure}
-\caption{(a) shows the two intersecting, oriented circles on the earlier Seifert surface for the trefoil knot.}
-\label{}
+\caption{(a) shows the two intersecting, oriented circles on the earlier Seifert surface for the trefoil knot. (b) shows the four combinations of the circles from (a) and their pushoffs.}
+\label{fig:trefoil pushoff}
 \end{figure}
 \\
 \textbf{Part 3 - Arf Invariant and Skein Relations}\\
